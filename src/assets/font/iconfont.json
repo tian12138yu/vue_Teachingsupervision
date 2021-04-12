@@ -1,0 +1,72 @@
+{
+  "id": "2374351",
+  "name": "教学督导",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2765390",
+      "name": "新增课程数",
+      "font_class": "new-courses",
+      "unicode": "e78e",
+      "unicode_decimal": 59278
+    },
+    {
+      "icon_id": "3858000",
+      "name": "权限",
+      "font_class": "quanxian",
+      "unicode": "e66a",
+      "unicode_decimal": 58986
+    },
+    {
+      "icon_id": "6109138",
+      "name": "新增任务",
+      "font_class": "xinzengrenwu",
+      "unicode": "e677",
+      "unicode_decimal": 58999
+    },
+    {
+      "icon_id": "9461257",
+      "name": "课程",
+      "font_class": "kecheng-copy",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "10003664",
+      "name": "用户 登录",
+      "font_class": "yonghudenglu",
+      "unicode": "e965",
+      "unicode_decimal": 59749
+    },
+    {
+      "icon_id": "12001236",
+      "name": "教室听课任务管理",
+      "font_class": "jiaoshitingkerenwuguanli",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "14232322",
+      "name": "登录密 码",
+      "font_class": "mima",
+      "unicode": "e679",
+      "unicode_decimal": 59001
+    },
+    {
+      "icon_id": "15082220",
+      "name": "用户 管理",
+      "font_class": "yonghuguanli",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "19432949",
+      "name": "我的任务 ",
+      "font_class": "renwu",
+      "unicode": "e6b9",
+      "unicode_decimal": 59065
+    }
+  ]
+}
