@@ -14,7 +14,7 @@ import classList from "@/components/admin/classList";
 import StudentForm from "@/components/student/StudentForm";
 import a404 from "@/components/a404";
 import studentCourseList from "@/components/student/studentCourseList";
-
+import NewForm from "@/components/admin/NewForm";
 Vue.use(VueRouter)
 
 const routes = [
@@ -28,7 +28,6 @@ const routes = [
     component: a404,
     meta: { hidden: true,title:"页面未找到"}
   },
-
   {
     path: '/home',
     component: Home,
@@ -83,7 +82,11 @@ const routes = [
         component: StudentForm,
         meta: { hidden: true,title:"我的评教"}
 
-      }
+      },
+      {
+        path: '/newForm',
+        component: NewForm
+      },
     ],
   },
 ]

@@ -50,7 +50,7 @@
         </el-col>
       </el-row>
       <!-- 用户列表 -->
-      <el-table :data="worklist" border stripe>
+      <el-table :data="worklist" border stripe v-loading="loading">
 <!--        <el-table-column label="任务号" prop="id"></el-table-column>-->
         <el-table-column label="任务简介" prop="wname"></el-table-column>
         <el-table-column fixed label="课程号" prop="cid"></el-table-column>
@@ -64,11 +64,18 @@
         <el-table-column label="创建时间" prop="creatime"></el-table-column>
         <el-table-column label="状态" prop="isfinished" :formatter="stateFormat">
         </el-table-column>
-        <el-table-column label= "反馈表" prop="formid" >
+          <el-table-column label="设计" prop="">
+            <template slot-scope="scope">
+              <el-button type=" success" size= mini  :disabled= "scope.row.formid !== 0" @click="$router.push('/newForm?id='+scope.row.id)">设计反馈表</el-button>
+            </template>
+          </el-table-column>
+
+        <el-table-column label= "反馈表" prop="formid">
 	        <template slot-scope="scope">
             <el-button type=" success" size= mini :disabled= "scope.row.formid === 0" @click="showEditForm(scope.row.formid)">查看反馈表</el-button>
             </template>
         </el-table-column>
+
         <el-table-column label="操作" prop="id">
           <template slot-scope="scope" >
             <!-- 修改 -->
@@ -81,6 +88,8 @@
 
           </template>
         </el-table-column>
+
+
       </el-table>
       <!-- 分页 -->
       <el-pagination
@@ -235,39 +244,57 @@
     </el-dialog>
 
     <!--显示具体的反馈单-->
-    <el-dialog title="反馈单" :visible.sync="formVisible" width="50%" @colse="editDialogClosed">
-      <el-form :model="form"  ref="editFormRef" label-width="70px">
-        <!-- 密码 -->
-        <el-form-item label="任务ID" prop="wname">
+    <el-dialog title="反馈单" :visible.sync="formVisible" width="50%" @colse="editDialogClosed"
+               centerdestroy-on-close = "true">
+      <el-form :model="form"  ref="editFormRef" label-width="70px" label-position=top>
+        <el-form-item label='任务号' prop="wid"  >
           <el-input v-model="form.wid"></el-input>
         </el-form-item>
-        <el-form-item label="课堂情况" prop="wname">
-          <el-input v-model="form.situation"></el-input>
-        </el-form-item>
-        <!-- 邮箱 -->
-        <el-form-item label="到课情况" prop="tid">
-          <el-input v-model="form.attendanceRate"></el-input>
-        </el-form-item>
-        <el-form-item label="老师状态" prop="cid">
-          <el-input v-model="form.teacherStatus"></el-input>
-        </el-form-item>
-        <el-form-item label="课程" prop="time">
+
+        <el-form-item label='课程号' prop="cid">
           <el-input v-model="form.cid"></el-input>
         </el-form-item>
-        <el-form-item label="院系" prop="time">
+
+        <el-form-item label='院系' prop="departmentname"  >
           <el-input v-model="form.departmentname"></el-input>
         </el-form-item>
-        <el-form-item label="专业" prop="time">
-          <el-input v-model="form.majorname"></el-input>
-        </el-form-item>
-        <el-form-item label="创建时间" prop="time">
+        <el-form-item label='创建时间' prop="createtime"  >
           <el-input v-model="form.createtime"></el-input>
         </el-form-item>
-        <el-form-item label="评分" prop="evaluate">
-          <el-input v-model="form.evaluate"></el-input>
+
+        <el-form-item :label=this.form.entry1 v-if="form.entry1 !== undefined" prop="evaluate1"  >
+          <el-input v-model="form.evaluate1"></el-input>
         </el-form-item>
-        <el-form-item label="备注" prop="remarks">
-          <el-input v-model="form.remarks"></el-input>
+        <el-form-item :label=this.form.entry2 v-if="form.entry2 !== undefined" prop="evaluate2"  >
+          <el-input v-model="form.evaluate2"></el-input>
+        </el-form-item>
+        <!-- 邮箱 -->
+        <el-form-item :label=this.form.entry3 v-if="form.entry3 !== undefined" prop="evaluate3"  >
+        <el-input v-model="form.evaluate3"></el-input>
+        </el-form-item>
+        <el-form-item :label=this.form.entry4 v-if="form.entry4 !== undefined" prop="evaluate4"  >
+
+        <el-input v-model="form.evaluate4"></el-input>
+        </el-form-item>
+        <el-form-item :label=this.form.entry5 v-if="form.entry5 !== undefined" prop="evaluate5"  >
+
+        <el-input v-model="form.evaluate5"></el-input>
+        </el-form-item>
+        <el-form-item :label=this.form.entry6 v-if="form.entry6 !== undefined" prop="evaluate6"  >
+
+        <el-input v-model="form.evaluate6"></el-input>
+        </el-form-item>
+        <el-form-item :label=this.form.entry7 v-if="form.entry7 !== undefined" prop="evaluate7"  >
+
+        <el-input v-model="form.evaluate7"></el-input>
+        </el-form-item>
+        <el-form-item :label=this.form.entry8 v-if="form.entry8 !== undefined" prop="evaluate8"  >
+
+        <el-input v-model="form.evaluate8"></el-input>
+        </el-form-item>
+        <el-form-item :label=this.form.entry9 v-if="form.entry9 !== undefined" prop="evaluate9"  >
+
+        <el-input v-model="form.evaluate9"></el-input>
         </el-form-item>
 
       </el-form>
@@ -295,6 +322,7 @@ export default {
         pageNum: 1,
         pageSize: 5
       },
+      loading: true,
       activeName: 'first',
       userlist: [],// 用户列表
       worklist: [],// 用户列表
@@ -401,6 +429,7 @@ export default {
       });
       this.worklist = res.data; // 将返回数据赋值
       this.total = res.numbers; // 总个数
+      this.loading = false;
     },
     stateFormat(row){
       // console.log("row="+row.isfinished);
