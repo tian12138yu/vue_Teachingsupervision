@@ -93,7 +93,7 @@
                 trigger="click">
               <el-table :data="gridData" width="50%">
                 <el-table-column  property="createtime" label="日期"></el-table-column>
-                <el-table-column  property="evaluate" label="评价"></el-table-column>
+                <el-table-column  property="summary" label="评价"></el-table-column>
               </el-table>
               <el-button slot="reference" type="mini" @click="getHistory(scope.row.cname)">查看</el-button>
             </el-popover>

@@ -66,7 +66,8 @@
         </el-table-column>
           <el-table-column label="设计" prop="">
             <template slot-scope="scope">
-              <el-button type=" success" size= mini  :disabled= "scope.row.formid !== 0" @click="$router.push('/newForm?id='+scope.row.id)">设计反馈表</el-button>
+              <el-button type=" success" size= mini  :disabled= "scope.row.formid !== 0"
+                         @click="$router.push({path:'/newForm',query:{wid:scope.row.id,name:scope.row.wname,cname:scope.row.cname}})">设计反馈表</el-button>
             </template>
           </el-table-column>
 
@@ -258,7 +259,7 @@
         <el-form-item label='院系' prop="departmentname"  >
           <el-input v-model="form.departmentname"></el-input>
         </el-form-item>
-        <el-form-item label='创建时间' prop="createtime"  >
+        <el-form-item label='创建时间' prop="createtime" disabled="true" >
           <el-input v-model="form.createtime"></el-input>
         </el-form-item>
 

@@ -41,8 +41,8 @@
         </el-table-column>
         <el-table-column label= "反馈表" prop="formid" >
           <template slot-scope="scope">
-            <el-button type=" success" v-if="scope.row.formid === 0" size= mini  @click="showForm(scope.row.id,scope.row.cname)">编辑反馈表</el-button>
-            <el-button type=" success" v-if="scope.row.formid !== 0" size= mini  @click="showEditForm(scope.row.formid)">查看反馈表</el-button>
+            <el-button type=" success" v-if="scope.row.isfinished === 0" :disabled="scope.row.formid === 0" size= mini  @click="showForm(scope.row.id,scope.row.cname,scope.row.formid)">编辑反馈表</el-button>
+            <el-button type=" success" v-if="scope.row.isfinished !== 0" size= mini  @click="showEditForm(scope.row.formid)">查看反馈表</el-button>
           </template>
         </el-table-column>
         <el-table-column label= "历史评价" prop="" >
@@ -74,7 +74,7 @@
 
     <!--显示具体的反馈单-->
     <el-dialog title="反馈单（确认后将提交）" :visible.sync="formVisible" width="50%" @colse="editDialogClosed">
-      <el-form :model="form"  :rules="editFormRules" ref="editFormRef" label-width="80px">
+      <el-form :model="form"  :rules="editFormRules" ref="editFormRef" label-width="80px" label-position=top>
         <!-- 密码 -->
         <el-form-item label="任务ID" prop="wid">
           <el-input v-model="form.wid" disabled></el-input>
@@ -82,29 +82,52 @@
         <el-form-item label="课程名称" prop="cid">
           <el-input v-model="form.cid" disabled></el-input>
         </el-form-item>
-        <el-form-item label="课堂情况" prop="situation">
-          <el-input v-model="form.situation"></el-input>
-        </el-form-item>
-        <!-- 邮箱 -->
-        <el-form-item label="到课情况" prop="attendanceRate">
-          <el-input v-model="form.attendanceRate"></el-input>
-        </el-form-item>
-        <el-form-item label="老师状态" prop="teacherStatus">
-          <el-input v-model="form.teacherStatus"></el-input>
-        </el-form-item>
         <el-form-item label="院系" prop="departmentname">
           <el-input v-model="form.departmentname" disabled></el-input>
         </el-form-item>
-        <el-form-item label="专业" prop="majorname">
-          <el-input v-model="form.majorname" disabled></el-input>
+
+        <el-form-item :label=this.form.entry1 v-if="form.entry1 !== undefined" prop="evaluate1"  >
+          <el-input v-model="form.evaluate1"></el-input>
         </el-form-item>
-        <el-form-item label="总结" prop="evaluate">
-          <el-input v-model="form.evaluate"></el-input>
+        <el-form-item :label=this.form.entry2 v-if="form.entry2 !== undefined" prop="evaluate2"  >
+          <el-input v-model="form.evaluate2"></el-input>
         </el-form-item>
-        <el-form-item label="备注" prop="evaluate">
+        <!-- 邮箱 -->
+        <el-form-item :label=this.form.entry3 v-if="form.entry3 !== undefined" prop="evaluate3"  >
+          <el-input v-model="form.evaluate3"></el-input>
+        </el-form-item>
+        <el-form-item :label=this.form.entry4 v-if="form.entry4 !== undefined" prop="evaluate4"  >
+
+          <el-input v-model="form.evaluate4"></el-input>
+        </el-form-item>
+        <el-form-item :label=this.form.entry5 v-if="form.entry5 !== undefined" prop="evaluate5"  >
+
+          <el-input v-model="form.evaluate5"></el-input>
+        </el-form-item>
+        <el-form-item :label=this.form.entry6 v-if="form.entry6 !== undefined" prop="evaluate6"  >
+
+          <el-input v-model="form.evaluate6"></el-input>
+        </el-form-item>
+        <el-form-item :label=this.form.entry7 v-if="form.entry7 !== undefined" prop="evaluate7"  >
+
+          <el-input v-model="form.evaluate7"></el-input>
+        </el-form-item>
+        <el-form-item :label=this.form.entry8 v-if="form.entry8 !== undefined" prop="evaluate8"  >
+
+          <el-input v-model="form.evaluate8"></el-input>
+        </el-form-item>
+        <el-form-item :label=this.form.entry9 v-if="form.entry9 !== undefined" prop="evaluate9"  >
+
+          <el-input v-model="form.evaluate9"></el-input>
+        </el-form-item>
+        <el-form-item label= '总评' v-if="form.summary !== 0" prop="summary"  >
+
+          <el-input v-model="form.summary"></el-input>
+        </el-form-item>
+        <el-form-item label= '备注' prop="remarks"  >
+
           <el-input v-model="form.remarks"></el-input>
         </el-form-item>
-
 
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -154,6 +177,7 @@ export default {
       // 修改用户信息
       editForm:{},
       form:{
+        id:'',
         wid:'',
         situation:'',
         attendanceRate:'',
@@ -262,12 +286,14 @@ export default {
       this.form = res;
       this.formVisible = true;
     },
-    async showForm(id,name){
+    async showForm(id,name,formId){
+      const {data:res1} = await this.$http.get("getForm?id="+formId);
+      // console.log(res1);
+      this.form = res1;
       const { data: res } = await this.$http.get("/getCidByName?val="+name);
       this.form.wid = id;
       this.form.cid = name;
       this.form.departmentname = res.departmentname;
-      this.form.majorname = res.majorname;
       this.formVisible = true;
     },
 

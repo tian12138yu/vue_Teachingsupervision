@@ -20,7 +20,24 @@
         >
           <el-input v-model="dynamicValidateForm.wid" disabled></el-input>
         </el-form-item>
-
+        <el-form-item
+            prop="cid"
+            label="课程名"
+            :rules="[
+      // { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+    ]"
+        >
+          <el-input v-model="dynamicValidateForm.cid" disabled></el-input>
+        </el-form-item>
+        <el-form-item
+            prop="cname"
+            label="任务简介"
+            :rules="[
+      // { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+    ]"
+        >
+          <el-input v-model="dynamicValidateForm.cname" disabled></el-input>
+        </el-form-item>
       </el-row>
 
       <el-form-item
@@ -77,8 +94,9 @@ export default {
         if (valid) {
           // alert('submit!');
           const {data :res} = await this.$http.post("/newForm", this.dynamicValidateForm);
-          this.$message.info(res);
-          console.log(this.dynamicValidateForm);
+          this.$message.success(res);
+          // console.log(this.dynamicValidateForm);
+          this.$router.push('/worklist');
         } else {
           console.log('error submit!!');
           return false;
@@ -110,11 +128,17 @@ export default {
       }
     },
     getUrl () {
-      const url = document.URL; //获取当前页面的url
-      const urlA = url.split('?');//以url中的问号进行分割;
-      const id = urlA[1].split('=');
       debugger;
-      this.dynamicValidateForm.wid = id[1]; //
+      var id = this.$route.query.wid
+
+      // const url = document.URL; //获取当前页面的url
+      // const urlA = url.split('?');//以url中的问号进行分割;
+      // const id = urlA[1].split('=');
+      // debugger;
+      this.dynamicValidateForm.wid = id; //
+      this.dynamicValidateForm.cid = this.$route.query.name;
+      this.dynamicValidateForm.cname = this.$route.query.cname;
+
       // return this.$message.info(this.$data.formId);
     },
     async getFormText() {
